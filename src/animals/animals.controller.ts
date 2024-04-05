@@ -13,6 +13,7 @@ export class AnimalsController {
   ) {}
   @Post()
 async create(
+  @Body('nom') nom: string,
   @Body('taille') taille: number,
   @Body('poids') poids: number,
   @Body('forceMorsure') forceMorsure: number,
@@ -22,6 +23,7 @@ async create(
   @Body('intelligence') intelligence: number
 ): Promise<Animal> {
   const newAnimal = new this.animalModel({
+    nom,
     taille,
     poids,
     forceMorsure,

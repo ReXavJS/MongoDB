@@ -4,6 +4,9 @@ import { Document } from 'mongoose';
 @Schema()
 export class Animal extends Document {
   @Prop()
+  nom: string;
+  
+  @Prop()
   taille: number;
 
   @Prop()
