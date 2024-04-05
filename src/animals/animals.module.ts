@@ -1,22 +1,12 @@
 import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { AnimalsService } from './animals.service';
+import { Animal, AnimalSchema } from './animal.model';
 
 @Module({
-  providers: [AnimalsService]
+  imports: [MongooseModule.forFeature([{ name: Animal.name, schema: AnimalSchema }])],
+  providers: [AnimalsService],
+  exports: [AnimalsService]
 })
 export class AnimalsModule {}
-
-import { Schema, Document } from 'mongoose';
-import { AnimalsService } from './animals/animals.service';
-
-export interface Animal extends Document {
-    name: string;
-    species: string;
-    age: number;
-}
-
-export const AnimalSchema = new Schema({
-    name: String,
-    species: String,
-    age: Number,
-});
 
