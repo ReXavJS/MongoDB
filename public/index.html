@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animaux</title>
+</head>
+<body>
+  <h1>Liste des Animaux</h1>
+
+  <!-- Tableau pour afficher les animaux -->
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Taille</th>
+        <th>Poids</th>
+        <th>Force de Morsure</th>
+        <th>Force</th>
+        <th>Régime Alimentaire</th>
+        <th>Vitesse</th>
+        <th>Intelligence</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="animalTable">
+      <!-- Ici seront affichés les animaux -->
+    </tbody>
+  </table>
+
+  <h2>Ajouter un Animal</h2>
+  <form id="addAnimalForm">
+    <label for="taille">Taille:</label>
+    <input type="number" id="taille" name="taille" required><br><br>
+
+    <label for="poids">Poids:</label>
+    <input type="number" id="poids" name="poids" required><br><br>
+
+    <label for="forceMorsure">Force de Morsure:</label>
+    <input type="number" id="forceMorsure" name="forceMorsure" required><br><br>
+
+    <label for="force">Force:</label>
+    <input type="number" id="force" name="force" required><br><br>
+
+    <label for="regimeAlimentaire">Régime Alimentaire:</label>
+    <input type="text" id="regimeAlimentaire" name="regimeAlimentaire" required><br><br>
+
+    <label for="vitesse">Vitesse:</label>
+    <input type="number" id="vitesse" name="vitesse" required><br><br>
+
+    <label for="intelligence">Intelligence:</label>
+    <input type="number" id="intelligence" name="intelligence" required><br><br>
+
+    <button type="submit">Ajouter Animal</button>
+  </form>
+
+  <script>
+    // Fonction pour afficher les animaux dans le tableau
+    async function displayAnimals() {
+      const response = await fetch('/animals');
+      const animals = await response.json();
+
+      const animalTable = document.getElementById('animalTable');
+      animalTable.innerHTML = '';
+
+      animals.forEach(animal => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${animal.taille}</td>
+          <td>${animal.poids}</td>
+          <td>${animal.forceMorsure}</td>
+          <td>${animal.force}</td>
+          <td>${animal.regimeAlimentaire}</td>
+          <td>${animal.vitesse}</td>
+          <td>${animal.intelligence}</td>
+          <td><button onclick="deleteAnimal('${animal._id}')">Supprimer</button></td>
+        `;
+        animalTable.appendChild(row);
+      });
+    }
+
+    // Fonction pour ajouter un nouvel animal
+    async function addAnimal(event) {
+      event.preventDefault();
+
+      const form = event.target;
+      const formData = new FormData(form);
+
+      const response = await fetch('http://localhost:4000/animals', {
+        method: 'POST',
+        body: JSON.stringify(Object.fromEntries(formData.entries())),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        form.reset();
+        displayAnimals();
+      }
+    }
+
+    // Fonction pour supprimer un animal
+    async function deleteAnimal(id) {
+      const response = await fetch(`/animals/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        displayAnimals();
+      }
+    }
+
+    // Événement de soumission du formulaire pour ajouter un animal
+    document.getElementById('addAnimalForm').addEventListener('submit', addAnimal);
+
+    // Au chargement de la page, afficher les animaux
+    displayAnimals();
+  </script>
+</body>
+</html>
