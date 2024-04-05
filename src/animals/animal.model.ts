@@ -1,13 +1,28 @@
-import { Schema, Document } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 
-export interface Animal extends Document {
-    name: string;
-    species: string;
-    age: number;
+@Schema()
+export class Animal extends Document {
+  @Prop()
+  taille: number;
+
+  @Prop()
+  poids: number;
+
+  @Prop()
+  forceMorsure: number;
+
+  @Prop()
+  force: number;
+
+  @Prop()
+  regimeAlimentaire: string;
+
+  @Prop()
+  vitesse: number;
+
+  @Prop()
+  intelligence: number;
 }
 
-export const AnimalSchema = new Schema({
-    name: String,
-    species: String,
-    age: Number,
-});
+export const AnimalSchema = SchemaFactory.createForClass(Animal);
