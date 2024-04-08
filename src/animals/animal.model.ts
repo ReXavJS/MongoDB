@@ -1,12 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Schema as MongooseSchema } from 'mongoose';
 
 @Schema()
 export class Animal extends Document {
   @Prop()
   nom: string;
   
-  @Prop()
+  @Prop({index: true})
   taille: number;
 
   @Prop()
@@ -15,7 +15,7 @@ export class Animal extends Document {
   @Prop()
   forceMorsure: number;
 
-  @Prop()
+  @Prop({index: true})
   force: number;
 
   @Prop()
@@ -26,6 +26,10 @@ export class Animal extends Document {
 
   @Prop()
   intelligence: number;
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Espece' })
+  espece: MongooseSchema.Types.ObjectId;
+
 }
 
 export const AnimalSchema = SchemaFactory.createForClass(Animal);
