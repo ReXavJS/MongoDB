@@ -11,9 +11,6 @@ On peut ajouter, modifier et supprimer nos infos en cliquant sur les boutons à 
 Lire tous les animaux
 GET /animals
 
-Lire un animal spécifique
-GET /animals/:id
-
 Mettre à jour un animal
 PUT /animals/:id
 
