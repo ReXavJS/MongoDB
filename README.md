@@ -3,7 +3,7 @@ Membre de l'équipe :
 Imrane Mebitil
 Xavier Mayer
 
-Lancer le container et le serveur NestJS : npm run start:dev
+Lancer le serveur NestJS : npm run start:dev
 
 On peut ajouter, modifier et supprimer nos infos en cliquant sur les boutons à cet effet
 
