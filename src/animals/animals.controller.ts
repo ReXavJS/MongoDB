@@ -48,9 +48,30 @@ async create(
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() animal: Animal) {
-    return this.animalsService.update(id, animal);
-  }
+async update(
+  @Param('id') id:string,
+  @Body('nom') nom: string,
+  @Body('taille') taille: number,
+  @Body('poids') poids: number,
+  @Body('forceMorsure') forceMorsure: number,
+  @Body('force') force: number,
+  @Body('regimeAlimentaire') regimeAlimentaire: string,
+  @Body('vitesse') vitesse: number,
+  @Body('intelligence') intelligence: number
+): Promise<Animal> {
+  const updatedAnimal: any = {
+    nom,
+    taille,
+    poids,
+    forceMorsure,
+    force,
+    regimeAlimentaire,
+    vitesse,
+    intelligence
+  };
+  return this.animalsService.update(id, updatedAnimal);
+}
+
 
   @Delete(':id')
   remove(@Param('id') id: string) {

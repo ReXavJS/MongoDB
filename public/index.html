@@ -57,10 +57,38 @@
     <button type="submit">Ajouter Animal</button>
   </form>
 
+  <h2>Mettre à jour un Animal</h2>
+<form id="updateAnimalForm" style="display: none;">
+  <label for="nom">Nom:</label>
+    <input type="text" id="nom" name="nom" required><br><br>
+
+    <label for="taille">Taille:</label>
+    <input type="number" id="taille" name="taille" required><br><br>
+
+    <label for="poids">Poids:</label>
+    <input type="number" id="poids" name="poids" required><br><br>
+
+    <label for="forceMorsure">Force de Morsure:</label>
+    <input type="number" id="forceMorsure" name="forceMorsure" required><br><br>
+
+    <label for="force">Force:</label>
+    <input type="number" id="force" name="force" required><br><br>
+
+    <label for="regimeAlimentaire">Régime Alimentaire:</label>
+    <input type="text" id="regimeAlimentaire" name="regimeAlimentaire" required><br><br>
+
+    <label for="vitesse">Vitesse:</label>
+    <input type="number" id="vitesse" name="vitesse" required><br><br>
+
+    <label for="intelligence">Intelligence:</label>
+    <input type="number" id="intelligence" name="intelligence" required><br><br>
+
+  <button type="submit">Mettre à jour Animal</button>
+</form>
   <script>
     // Fonction pour afficher les animaux dans le tableau
     async function displayAnimals() {
-      const response = await fetch('/animals');
+      const response = await fetch('http://localhost:4000/animals');
       const animals = await response.json();
 
       const animalTable = document.getElementById('animalTable');
@@ -77,7 +105,10 @@
           <td>${animal.regimeAlimentaire}</td>
           <td>${animal.vitesse}</td>
           <td>${animal.intelligence}</td>
-          <td><button onclick="deleteAnimal('${animal._id}')">Supprimer</button></td>
+          <td>
+  <button onclick="updateAnimal('${animal._id}')">Mettre à jour</button>
+  <button onclick="deleteAnimal('${animal._id}')">Supprimer</button>
+</td>
         `;
         animalTable.appendChild(row);
       });
@@ -103,6 +134,44 @@
         displayAnimals();
       }
     }
+
+    async function updateAnimal(id) {
+  const response = await fetch(`/animals/${id}`);
+  const animal = await response.json();
+
+  const form = document.getElementById('updateAnimalForm');
+  form.style.display = 'block'; // Afficher le formulaire
+
+  // Remplir le formulaire avec les informations actuelles de l'animal
+  form.elements['nom'].value = animal.nom;
+  form.elements['taille'].value = animal.taille;
+  form.elements['poids'].value = animal.poids;
+  form.elements['forceMorsure'].value = animal.forceMorsure;
+  form.elements['force'].value = animal.force;
+  form.elements['regimeAlimentaire'].value = animal.regimeAlimentaire;
+  form.elements['vitesse'].value = animal.vitesse;
+  form.elements['intelligence'].value = animal.intelligence;
+  // ...
+  
+  // Modifier l'événement de soumission du formulaire pour mettre à jour l'animal spécifique
+  form.onsubmit = event => {
+    event.preventDefault();
+    const formData = new FormData(form);
+    fetch(`/animals/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(Object.fromEntries(formData.entries())),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => {
+      if (response.ok) {
+        form.reset();
+        form.style.display = 'none'; // Cacher le formulaire
+        displayAnimals();
+      }
+    });
+  };
+}
 
     // Fonction pour supprimer un animal
     async function deleteAnimal(id) {

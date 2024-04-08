@@ -20,10 +20,11 @@ export class AnimalsService {
     return this.animalModel.findById(id).exec();
   }
 
-  update(id: string, animal: Animal) {
-    return this.animalModel.findByIdAndUpdate(id, animal).exec();
+  update(id: string, animal: Animal): Promise<Animal> {
+    console.log(id,animal);
+    return this.animalModel.findByIdAndUpdate(id, animal, { new: true }).exec();
   }
-
+  
   remove(id: string) {
     return this.animalModel.findByIdAndDelete(id).exec();
   }
