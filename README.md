@@ -17,7 +17,7 @@ GET /animals/:id
 Mettre à jour un animal
 PUT /animals/:id
 
-Le front est hébergé à cette adresse : https://6613e3afd2505110049b3d85--astonishing-pika-6a5798.netlify.app/
+Le front est hébergé à cette adresse : https://bright-hummingbird-fe7b7e.netlify.app/
 Notre BDD est hébergé sur mongoDB Atlas et on observe les changements dessus via mongoDB Compass
 
 Mais le back n'est pas hébergé car il est extrêmement lent donc je n'ai pas pu faire de test https://mongodb-1-on3d.onrender.com donc ils ne sont pas encore liés.
