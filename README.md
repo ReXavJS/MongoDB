@@ -14,6 +14,9 @@ GET /animals
 Mettre à jour un animal
 PUT /animals/:id
 
+Supprimer un animal
+DELETE /animals/:id
+
 Le front est hébergé à cette adresse : https://bright-hummingbird-fe7b7e.netlify.app/
 Notre BDD est hébergé sur mongoDB Atlas et on observe les changements dessus via mongoDB Compass
 
